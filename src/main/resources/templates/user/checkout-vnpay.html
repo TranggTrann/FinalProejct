@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Rook Book Store</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicons -->
+    <link th:href="@{/images/favicon.ico}" rel="shortcut icon">
+    <link th:href="@{/images/icon.png}" rel=" apple-touch-icon" }>
+
+    <!-- Google font (font-family: 'Roboto', sans-serif; Poppins ; Satisfy) -->
+    <link th:href="@{/css/user/open_sans.css}" rel="stylesheet">
+    <link th:href="@{/css/user/poppins.css}" rel="stylesheet">
+    <link th:href="@{/css/user/roboto.css}" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link th:href="@{/css/user/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Plugins css -->
+    <link th:href="@{/css/user/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/bicon.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/pe-icon-7-stroke.css}" rel="stylesheet">
+    <link th:href="@{/css/user/slick.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/fakeloader.css}" rel="stylesheet">
+    <link th:href="@{/css/user/nivo-slider.css}" rel="stylesheet">
+    <link th:href="@{/css/user/nivo-preview-2.css}" rel="stylesheet">
+    <link th:href="@{/css/user/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/owl.theme.default.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/material-design-iconic-font.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/animation.css}" rel="stylesheet">
+    <link th:href="@{/css/user/fancybox.css}" rel="stylesheet">
+    <link th:href="@{/css/user/mainmenu.css}" rel="stylesheet">
+    <link th:href="@{/css/user/fotorama.css}" rel="stylesheet">
+    <link th:href="@{/css/user/jquery-ui.min.css}" rel="stylesheet">
+    <link th:href="@{/css/user/lightbox.css}" rel="stylesheet">
+    <link th:href="@{/css/user/style.css}" rel="stylesheet">
+
+    <!-- Cusom css -->
+    <link th:href="@{/css/user/custom.css}" rel="stylesheet">
+
+    <!-- Modernizer js -->
+    <script th:src="@{/js/user/vendor/modernizr-3.5.0.min.js}"></script>
+
+    <style>
+        .mainmenu__nav .meninmenu li a {
+            color: white;
+        }
+
+        .submit {
+            display: inline-block;
+            padding: 20px 60px;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit:hover {
+            background-color: #45a049;
+        }
+
+        .submit:active {
+            background-color: #3e8e41;
+        }
+
+        .submit:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <style>
+        .ft__logo a img {
+            max-width: 20%;
+        }
+
+        .truncate-text {
+            display: inline-block;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        function requestToVnPay(){
+
+            /*<![CDATA[*/
+
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email =document.getElementById('email').value;
+            const bankCode = document.getElementById('bankCode').value;
+            const address = document.getElementById('address').value;
+            const amount = document.getElementById('orderTotal').innerText;
+
+            // Loại bỏ các ký tự không phải số
+            const numericString = amount.replace(/[^\d]/g, ''); // "35000"
+
+            // Chuyển đổi chuỗi thành số
+            const numericValue = parseInt(numericString, 10); // 35000
+
+            var data = JSON.stringify({"fullName": fullName, "phoneNumber": phoneNumber, "email": email, "bankCode": bankCode, "totalAmount": numericValue , "address": address});
+
+            $.ajax({
+                type: "POST",
+                url: "/api/v1/payment/create_payment",  // Replace with the actual endpoint to get cart item count
+                contentType: "application/json",
+                data: data,
+                success: function (response) {
+                    window.location.href = response.url;
+                },
+                error: function (xhr, status, error) {
+                    alert("Error performing request", error);
+                }
+            })
+
+            /*]]>*/
+
+
+        }
+    </script>
+
+
+</head>
+
+<body>
+
+
+<!-- Main wrapper -->
+<div class="wrapper" id="wrapper">
+
+    <!-- Header -->
+    <header th:replace="user/fragments/header :: header"></header>
+    <!-- //Header -->
+    <!-- Start Search Popup -->
+    <div th:replace="user/fragments/search_popup :: search_popup"></div>
+    <!-- End Search Popup -->
+    <!-- Start Bradcaump area -->
+    <div class="ht__bradcaump__area bg-image--4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="bradcaump__inner text-center">
+                        <h2 class="bradcaump-title">Checkout - VNPAY</h2>
+                        <nav class="bradcaump-content">
+                            <a class="breadcrumb_item" th:href="@{/}">Home</a>
+                            <span class="brd-separetor">/</span>
+                            <span class="breadcrumb_item active">Checkout - VNPay</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Bradcaump area -->
+    <!-- Start Checkout Area -->
+    <section class="wn__checkout__area section-padding--lg bg__white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="customer_details">
+                        <h3 class="mb-4">Billing details</h3>
+                        <form>
+                            <div class="customar__field">
+                                <div class="input_box w--75">
+                                    <label>Full name <span>*</span></label>
+                                    <input type="text" id="fullName" th:value="${orderPerson.getFullName()}" />
+                                </div>
+
+                                <div class="input_box w--75">
+                                    <label>Phone <span>*</span></label>
+                                    <input type="text" id="phoneNumber" th:value="${orderPerson.getPhoneNumber()}" />
+                                </div>
+
+                                <div class="input_box w--75">
+                                    <label>Email address <span>*</span></label>
+                                    <input type="email" id="email" th:value="${orderPerson.getEmail()}"/>
+                                </div>
+
+                                <div class="input_box w--75">
+                                    <label for="bankCode">Bank code <span>*</span></label>
+                                    <input type="text" id="bankCode"/>
+                                </div>
+
+                                <div class="input_box w--75">
+                                    <label>Delivery address <span>*</span></label>
+                                    <textarea id="address" cols="70" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn-success submit" th:if="${totalCart > 0}" th:onclick="|requestToVnPay()|">
+                                order
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="wn__order__box">
+                        <h3 class="onder__title">Your order</h3>
+                        <ul class="order__total">
+                            <li>Product</li>
+                            <li>Total</li>
+                        </ul>
+                        <ul class="order_product">
+                            <li th:each="cartItem : ${cart.cartItems}"
+                                class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="truncate-text mr-2" th:text="${cartItem.title}"></span>
+                                    × <span th:text="${cartItem.quantity}" class="ml-1"></span>
+                                </div>
+                                <span
+                                        th:text="${#numbers.formatDecimal(__${(cartItem.price * cartItem.quantity)}__, 0, 'POINT', 0, 'POINT')} + ' VND'"
+                                        class="text-right"></span>
+                            </li>
+                        </ul>
+                        <ul class="total__amount">
+                            <li class="d-flex justify-content-between">
+                                <span>Order Total</span>
+                                <span
+                                        th:text="${#numbers.formatDecimal(__${(totalCart)}__, 0, 'POINT', 0, 'POINT')} + ' VND'"
+                                        class="text-right" id="orderTotal"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="accordion" class="checkout_accordion mt--30" role="tablist">
+                        <div class="payment">
+                            <div class="che__header" role="tab" id="headingThree">
+                                <a class="collapsed checkout__title" data-toggle="collapse" th:href="@{/cart/checkout}"
+                                   aria-expanded="false" aria-controls="collapseThree">
+                                    <span>Cash on Delivery</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="accordion1" class="checkout_accordion mt--30" role="tablist">
+                        <div class="payment">
+                            <div class="che__header" role="tab" id="headingThree1">
+                                <a class="collapsed checkout__title" data-toggle="collapse" th:href="@{/cart/checkout-vnpay}"
+                                   aria-expanded="false" aria-controls="collapseThree">
+                                    <span>Cash on VN Pay</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Checkout Area -->
+
+    <!-- Footer Area -->
+    <footer th:replace="user/fragments/footer :: footer"></footer>
+    <!-- //Footer Area -->
+
+</div>
+<!-- //Main wrapper -->
+<!-- JS Files -->
+<script th:src="@{/js/user/vendor/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/user/popper.min.js}"></script>
+<script th:src="@{/js/user/bootstrap.min.js}"></script>
+<script th:src="@{/js/user/plugins.js}"></script>
+<script th:src="@{/js/user/active.js}"></script>
+
+
+</body>
+
+</html>
